@@ -1,2 +1,19 @@
 # variables.tf
-# No variables needed for this simple example
+
+variable "github_token" {
+  description = "GitHub token with appropriate permissions"
+  type        = string
+  default     = ""
+}
+
+variable "github_org" {
+  description = "GitHub organization name"
+  type        = string
+  default     = ""
+}
+
+variable "github_repo" {
+  description = "GitHub repository name"
+  type        = string
+  default     = ""
+}
