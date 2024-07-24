@@ -1,15 +1,15 @@
 # main.tf
 
 resource "github_repository_ruleset" "pr_ruleset" {
-  for_each    = toset(data.github_repositories.all_repos.names)
-  name        = "require-pull-requests"
+  for_each    = toset(data.github_repositories.all_repos.full_names)
+  name        = "protect-main-branch"
   repository  = each.key
   target      = "branch"
   enforcement = "active"
 
   conditions {
     ref_name {
-      include = ["~ALL"]
+      include = ["main"]
       exclude = []
     }
   }
