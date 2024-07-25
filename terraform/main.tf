@@ -25,7 +25,7 @@ resource "github_repository" "settings_all" {
 # Apply ruleset to all repositories
 resource "github_repository_ruleset" "pr_ruleset_all" {
   for_each    = toset(data.github_repositories.all_repos.names)
-  name        = "protect-main-branch-${each.key}"
+  name        = "protect-main-branch-${each.key}-pre-commit"
   repository  = each.key
   target      = "branch"
   enforcement = "active"
@@ -50,7 +50,7 @@ resource "github_repository_ruleset" "pr_ruleset_all" {
 # Apply ruleset to repositories with 'terraform' in their name
 resource "github_repository_ruleset" "pr_ruleset_terraform" {
   for_each    = toset(data.github_repositories.terraform_repos.names)
-  name        = "protect-main-branch-terraform-${each.key}"
+  name        = "protect-main-branch-${each.key}-terraform-plan"
   repository  = each.key
   target      = "branch"
   enforcement = "active"
@@ -64,9 +64,6 @@ resource "github_repository_ruleset" "pr_ruleset_terraform" {
 
   rules {
     required_status_checks {
-      required_check {
-        context = "pre-commit"
-      }
       required_check {
         context = "terraform"
       }
@@ -78,7 +75,7 @@ resource "github_repository_ruleset" "pr_ruleset_terraform" {
 # Apply ruleset to repositories with 'kong' in their name
 resource "github_repository_ruleset" "pr_ruleset_kong" {
   for_each    = toset(data.github_repositories.kong_repos.names)
-  name        = "protect-main-branch-kong-${each.key}"
+  name        = "protect-main-branch-${each.key}-release"
   repository  = each.key
   target      = "branch"
   enforcement = "active"
@@ -93,10 +90,7 @@ resource "github_repository_ruleset" "pr_ruleset_kong" {
   rules {
     required_status_checks {
       required_check {
-        context = "pre-commit"
-      }
-      required_check {
-        context = "done"
+        context = "Done"
       }
       strict_required_status_checks_policy = true
     }
