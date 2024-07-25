@@ -74,3 +74,31 @@ resource "github_repository_ruleset" "pr_ruleset_terraform" {
     }
   }
 }
+
+# Apply ruleset to repositories with 'kong' in their name
+resource "github_repository_ruleset" "pr_ruleset_kong" {
+  for_each    = toset(data.github_repositories.kong_repos.names)
+  name        = "protect-main-branch-kong-${each.key}"
+  repository  = each.key
+  target      = "branch"
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["refs/heads/main"]
+      exclude = []
+    }
+  }
+
+  rules {
+    required_status_checks {
+      required_check {
+        context = "pre-commit"
+      }
+      required_check {
+        context = "done"
+      }
+      strict_required_status_checks_policy = true
+    }
+  }
+}
