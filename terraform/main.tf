@@ -9,7 +9,7 @@ resource "github_repository_ruleset" "pr_ruleset" {
 
   conditions {
     ref_name {
-      include = ["main"]
+      include = ["refs/heads/main"]
       exclude = []
     }
   }
