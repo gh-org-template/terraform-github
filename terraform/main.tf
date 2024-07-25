@@ -15,20 +15,6 @@ resource "github_repository_ruleset" "pr_ruleset_all" {
   }
 
   rules {
-    creation                = true
-    update                  = true
-    deletion                = true
-    required_linear_history = true
-    required_signatures     = true
-
-    pull_request {
-      dismiss_stale_reviews_on_push     = false
-      require_code_owner_review         = false
-      require_last_push_approval        = false
-      required_approving_review_count   = 0
-      required_review_thread_resolution = false
-    }
-
     required_status_checks {
       required_check {
         context = "pre-commit"
