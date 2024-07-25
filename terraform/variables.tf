@@ -1,5 +1,3 @@
-# variables.tf
-
 variable "github_token" {
   description = "GitHub token with appropriate permissions"
   type        = string
@@ -12,13 +10,11 @@ variable "github_org" {
   default     = ""
 }
 
-variable "github_repo" {
-  description = "GitHub repository name"
-  type        = string
-  default     = ""
-}
-
 variable "repositories" {
-  description = "List of repositories to manage"
-  type        = list(string)
+  description = "List of repositories to manage with their templates"
+  type = list(object({
+    name     = string
+    template = string
+  }))
+  default = []
 }
