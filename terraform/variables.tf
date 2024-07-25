@@ -17,3 +17,8 @@ variable "github_repo" {
   type        = string
   default     = ""
 }
+
+variable "repositories" {
+  description = "List of repositories to manage"
+  type        = list(string)
+}
