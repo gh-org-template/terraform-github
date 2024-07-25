@@ -1,3 +1,10 @@
 repositories = [
-  "template-template"
+  {
+    name     = "template-template"
+    template = ""
+  },
+  {
+    name     = "kong-openssl"
+    template = "template-1-github-release"
+  }
 ]
