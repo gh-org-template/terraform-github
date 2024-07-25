@@ -1,7 +1,7 @@
 # main.tf
 
 resource "github_repository_ruleset" "pr_ruleset" {
-  for_each    = toset(data.github_repositories.all_repos.full_names)
+  for_each    = toset(data.github_repositories.all_repos.names)
   name        = "protect-main-branch"
   repository  = each.key
   target      = "branch"
