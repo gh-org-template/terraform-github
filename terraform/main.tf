@@ -1,8 +1,8 @@
 # main.tf
 
-# Apply repository settings to all repositories
+# Update repository settings for all repositories
 resource "github_repository" "settings_all" {
-  for_each = toset(data.github_repositories.all_repos.names)
+  for_each = toset(var.repositories)
   name     = each.key
 
   has_issues             = false

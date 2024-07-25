@@ -1,0 +1,3 @@
+repositories = [
+  "template-template"
+]
