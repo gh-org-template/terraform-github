@@ -39,6 +39,15 @@ validate: init
         -w /workspace \
         $(TERRAFORM_IMAGE) validate
 
+.PHONY: exec
+exec: init
+	docker run -it --rm --entrypoint /bin/sh \
+        --env-file .env \
+        -u $(USER_ID):$(GROUP_ID) \
+        -v $(PWD)/$(TERRAFORM_DIR):/workspace \
+        -w /workspace \
+        $(TERRAFORM_IMAGE)
+
 .PHONY: plan
 plan: init
 	mkdir -p $(PLAN_DIR)
