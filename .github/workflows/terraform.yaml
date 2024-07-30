@@ -61,8 +61,12 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          header: terraform-plan
-          path: terraform/plan/terraform.txt
+          header: "## Terraform Plan"
+          message: |
+            ### Plan Output
+            ```hcl
+            $(cat terraform/plan/terraform.txt)
+            ```
 
       - name: Apply Terraform
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
