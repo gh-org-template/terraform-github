@@ -14,5 +14,9 @@ repositories = [
   {
     name     = "kong-development"
     template = "template-1-github-release"
+  },
+  {
+    name     = "multi-arch-fpm"
+    template = "template-1-github-release"
   }
 ]
