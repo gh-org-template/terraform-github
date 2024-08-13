@@ -22,5 +22,9 @@ repositories = [
   {
     name     = "kong-package"
     template = "template-1-github-release"
+  },
+  {
+    name     = "atc-router"
+    template = "template-1-github-release"
   }
 ]
