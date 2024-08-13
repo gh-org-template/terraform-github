@@ -45,6 +45,12 @@ resource "github_repository_ruleset" "pr_ruleset_all" {
       strict_required_status_checks_policy = true
     }
   }
+
+  bypass_actors {
+    actor_id    = "952934"
+    actor_type  = "Integration"
+    bypass_mode = "always"
+  }
 }
 
 # Apply ruleset to repositories with 'terraform' in their name
@@ -70,6 +76,12 @@ resource "github_repository_ruleset" "pr_ruleset_terraform" {
       strict_required_status_checks_policy = true
     }
   }
+
+  bypass_actors {
+    actor_id    = "952934"
+    actor_type  = "Integration"
+    bypass_mode = "always"
+  }
 }
 
 # Apply ruleset to repositories with 'kong' in their name
@@ -94,5 +106,11 @@ resource "github_repository_ruleset" "pr_ruleset_kong" {
       }
       strict_required_status_checks_policy = true
     }
+  }
+
+  bypass_actors {
+    actor_id    = "952934"
+    actor_type  = "Integration"
+    bypass_mode = "always"
   }
 }
