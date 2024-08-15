@@ -1,8 +1,17 @@
 # main.tf
 
-# Update repository settings for all repositories
+# Filter out existing repositories
+locals {
+  existing_repos_set = toset(data.github_repositories.all_repos.names)
+  repos_to_manage = {
+    for repo in var.repositories : repo.name => repo
+    if !contains(local.existing_repos_set, repo.name)
+  }
+}
+
+# Update repository settings for all repositories that do not already exist
 resource "github_repository" "settings_all" {
-  for_each = { for repo in var.repositories : repo.name => repo }
+  for_each = local.repos_to_manage
   name     = each.key
 
   visibility             = "public"
