@@ -1,5 +1,5 @@
 locals {
-  timestamp = formatdate("YYYYMMDD-HHMMss", timestamp())
+  timestamp = formatdate("YYYYMMDD-HHMMSS", timestamp())
   combined_repos = toset(concat(
     data.github_repositories.kong_repos.names,
     ["multi-arch-fpm"]
