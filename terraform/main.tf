@@ -84,9 +84,16 @@ resource "github_repository_ruleset" "pr_ruleset_terraform" {
   }
 }
 
+locals {
+  combined_repos = toset(concat(
+    data.github_repositories.kong_repos.names,
+    ["multi-arch-fpm"]
+  ))
+}
+
 # Apply ruleset to repositories with 'kong' in their name
 resource "github_repository_ruleset" "pr_ruleset_kong" {
-  for_each    = toset(data.github_repositories.kong_repos.names)
+  for_each    = local.combined_repos
   name        = "protect-main-branch-${each.key}-release"
   repository  = each.key
   target      = "branch"
