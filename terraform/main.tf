@@ -1,15 +1,31 @@
-locals {
-  timestamp = formatdate("YYYYMMDD-HHMMSS", timestamp())
-  combined_repos = toset(concat(
-    data.github_repositories.kong_repos.names,
-    ["multi-arch-fpm"]
-  ))
+# main.tf
+
+# Update repository settings for all repositories
+resource "github_repository" "settings_all" {
+  for_each = { for repo in var.repositories : repo.name => repo }
+  name     = each.key
+
+  visibility             = "public"
+  has_issues             = false
+  has_wiki               = false
+  has_projects           = false
+  allow_merge_commit     = false
+  allow_auto_merge       = true
+  delete_branch_on_merge = true
+
+  dynamic "template" {
+    for_each = each.value.template != "" ? [1] : []
+    content {
+      owner      = var.github_org
+      repository = each.value.template
+    }
+  }
 }
 
-# Apply ruleset to all repositories with a timestamp
+# Apply ruleset to all repositories
 resource "github_repository_ruleset" "pr_ruleset_all" {
   for_each    = toset(data.github_repositories.all_repos.names)
-  name        = "protect-main-branch-${each.key}-pre-commit-${local.timestamp}"
+  name        = "protect-main-branch-${each.key}-pre-commit"
   repository  = each.key
   target      = "branch"
   enforcement = "active"
@@ -37,10 +53,10 @@ resource "github_repository_ruleset" "pr_ruleset_all" {
   }
 }
 
-# Apply ruleset to repositories with 'terraform' in their name with a timestamp
+# Apply ruleset to repositories with 'terraform' in their name
 resource "github_repository_ruleset" "pr_ruleset_terraform" {
   for_each    = toset(data.github_repositories.terraform_repos.names)
-  name        = "protect-main-branch-${each.key}-terraform-plan-${local.timestamp}"
+  name        = "protect-main-branch-${each.key}-terraform-plan"
   repository  = each.key
   target      = "branch"
   enforcement = "active"
@@ -68,10 +84,17 @@ resource "github_repository_ruleset" "pr_ruleset_terraform" {
   }
 }
 
-# Apply ruleset to repositories with 'kong' in their name with a timestamp
+locals {
+  combined_repos = toset(concat(
+    data.github_repositories.kong_repos.names,
+    ["multi-arch-fpm"]
+  ))
+}
+
+# Apply ruleset to repositories with 'kong' in their name
 resource "github_repository_ruleset" "pr_ruleset_kong" {
   for_each    = local.combined_repos
-  name        = "protect-main-branch-${each.key}-release-${local.timestamp}"
+  name        = "protect-main-branch-${each.key}-release"
   repository  = each.key
   target      = "branch"
   enforcement = "active"
