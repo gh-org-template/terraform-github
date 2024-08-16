@@ -1,27 +1,5 @@
 # main.tf
 
-# Update repository settings for all repositories
-resource "github_repository" "settings_all" {
-  for_each = { for repo in var.repositories : repo.name => repo }
-  name     = each.key
-
-  visibility             = "public"
-  has_issues             = false
-  has_wiki               = false
-  has_projects           = false
-  allow_merge_commit     = false
-  allow_auto_merge       = true
-  delete_branch_on_merge = true
-
-  dynamic "template" {
-    for_each = each.value.template != "" ? [1] : []
-    content {
-      owner      = var.github_org
-      repository = each.value.template
-    }
-  }
-}
-
 # Apply ruleset to all repositories
 resource "github_repository_ruleset" "pr_ruleset_all" {
   for_each    = toset(data.github_repositories.all_repos.names)
