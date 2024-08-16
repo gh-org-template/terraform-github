@@ -2,7 +2,7 @@
 locals {
   combined_repos = toset(concat(
     data.github_repositories.kong_repos.names,
-    ["multi-arch-fpm"]
+    ["multi-arch-fpm", "template-1-github-release"]
   ))
   timestamp = formatdate("YYYYMMDD-HHMMss", timestamp())
 }
