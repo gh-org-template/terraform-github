@@ -34,6 +34,6 @@ repositories = [
   },
   {
     name     = "kong-docker"
-    template = "template-1-github-release"
+    template = "template-template"
   }
 ]
