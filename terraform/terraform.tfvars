@@ -26,5 +26,10 @@ repositories = [
   {
     name     = "atc-router"
     template = "template-1-github-release"
+  },
+  {
+    name       = "kong-test-suite"
+    template   = "template-template"
+    visibility = "private"
   }
 ]
