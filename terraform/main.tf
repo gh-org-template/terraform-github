@@ -11,7 +11,7 @@ resource "github_repository" "settings_all" {
   for_each = { for repo in var.repositories : repo.name => repo }
   name     = each.key
 
-  visibility             = "public"
+  visibility             = lookup(each.value, "visibility", "public")
   has_issues             = false
   has_wiki               = false
   has_projects           = false
