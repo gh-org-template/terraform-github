@@ -31,5 +31,9 @@ repositories = [
     name       = "kong-test-suite"
     template   = "template-template"
     visibility = "private"
+  },
+  {
+    name     = "kong-docker"
+    template = "template-1-github-release"
   }
 ]
