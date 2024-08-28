@@ -18,3 +18,12 @@ variable "repositories" {
   }))
   default = []
 }
+
+variable "private_repositories" {
+  description = "List of repositories to manage with their templates"
+  type = list(object({
+    name     = string
+    template = string
+  }))
+  default = []
+}
