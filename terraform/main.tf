@@ -18,6 +18,7 @@ resource "github_repository" "settings_all" {
   allow_merge_commit     = false
   allow_auto_merge       = true
   delete_branch_on_merge = true
+  is_template            = contains(split("-", each.key), "template") ? true : false
 
   dynamic "template" {
     for_each = each.value.template != "" ? [1] : []
