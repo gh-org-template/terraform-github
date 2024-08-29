@@ -2,6 +2,10 @@ private_repositories = [
   {
     name     = "kong-test-suite"
     template = "template-template"
+  },
+  {
+    name     = "kong-fuzzy-testing"
+    template = "template-template"
   }
 ]
 
